@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Header.module.scss';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-
+import { NavLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
@@ -13,7 +13,7 @@ const Component = ({ className, children, login }) => (
   <div className={clsx(styles.header, styles.root)}>
     {initialState.role === 'user' || initialState.role === 'admin' ?
       <div>
-        <Button variant="contained">MY POST</Button>
+        <Button component={NavLink} to={`/`} variant="contained" activeClassName='active'>MY POST</Button>
         <Button variant="contained">LogOut</Button>
       </div>
       :

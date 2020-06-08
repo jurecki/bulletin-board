@@ -5,8 +5,7 @@ import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getAll, reduxActionCreator } from '../../../redux/postsRedux';
-import { Post } from '../Post/Post';
+import { getAll } from '../../../redux/postsRedux';
 import styles from './Homepage.module.scss';
 
 const Component = ({ className, children, posts }) => (
@@ -19,7 +18,7 @@ const Component = ({ className, children, posts }) => (
           <NavLink key={post.id} to={`/post/${post.id}`}>
             <p>{post.title}</p>
           </NavLink>
-        )}
+        ).reverse()}
       </div> :
       null
     }
@@ -40,7 +39,7 @@ const mapStateToProps = state => ({
 //   someAction: arg => dispatch(reduxActionCreator(arg)),
 // });
 
-const Container = connect(mapStateToProps)(Component);
+const Container = connect(mapStateToProps,null)(Component);
 
 export {
   //Component as Homepage,
