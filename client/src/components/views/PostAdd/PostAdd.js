@@ -3,7 +3,7 @@ import { initialState } from '../../../redux/initialState';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { getAll, createActionAddPost } from '../../../redux/postsRedux';
-import SubmitPostForm from '../../features/SubmitPostForm'
+import SubmitPostForm from '../../features/SubmitPostForm';
 import styles from './PostAdd.module.scss';
 
 const Component = ({ addPost }) => {
@@ -16,9 +16,8 @@ const Component = ({ addPost }) => {
         </div>
       }
     </div>
-
   );
-}
+};
 
 const mapStateToProps = state => ({
   posts: getAll(state),

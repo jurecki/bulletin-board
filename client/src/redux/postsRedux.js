@@ -3,7 +3,7 @@ import { API_URL } from '../config';
 
 /* selectors */
 export const getAll = ({ posts }) => posts.data;
-export const getPostById = ({ posts }, id) => posts.data.find(post => post.id === parseInt(id));
+export const getPostById = ({ posts }, id) => posts.data.find(post => parseInt(post._id) === parseInt(id));
 
 /* action name creator */
 const reducerName = 'posts';
@@ -29,16 +29,37 @@ export const createActionRemovePost = payload => ({ payload, type: REMOVE_POST }
 
 export const fetchPublished = () => {
   return (dispatch, getState) => {
-    dispatch(fetchStarted());
+    const { posts } = getState();
+    console.log(posts);
 
+    if (posts.data.length === 0 && posts.loading.active === false) {
+      dispatch(fetchStarted());
+      axios
+        .get('http://localhost:8000/api/posts')
+        .then(res => {
+          dispatch(fetchSuccess(res.data));
+        })
+        .catch(err => {
+          dispatch(fetchError(err.message || true));
+        });
+    }
+
+  };
+};
+
+export const loadPostById = (id) => {
+  return (dispatch, getState) => {
+    dispatch(fetchStarted());
     axios
-      .get('http://localhost:8000/api/posts')
+      .get(`http://localhost:8000/api/posts/${id}`)
       .then(res => {
         dispatch(fetchSuccess(res.data));
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
       });
+
+
   };
 };
 
