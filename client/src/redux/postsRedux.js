@@ -58,9 +58,29 @@ export const loadPostById = (id) => {
       .catch(err => {
         dispatch(fetchError(err.message || true));
       });
+  };
+};
 
+export const addPost = (data) => {
+  return dispatch => {
+    dispatch(fetchStarted());
+
+    axios.post(
+      `http://localhost:8000/api/posts`,
+      data,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+
+    dispatch(createActionAddPost(data));
 
   };
+
 };
 
 /* reducer */

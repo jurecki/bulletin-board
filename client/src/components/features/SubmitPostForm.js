@@ -48,10 +48,10 @@ class SubmitPostForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { post } = this.state
-    const { action, type } = this.props
+    const { post } = this.state;
+    const { action, type } = this.props;
     let error = null;
-    console.log('Data akutalizacji', post.dateOfUpdate, 'Data publikacji', post.dateOfPublication)
+    console.log('Data akutalizacji', post.dateOfUpdate, 'Data publikacji', post.dateOfPublication);
 
     // if (post.title.length < 10) error = `Tytuł powinien mieć min. 10 znaków`;
     // else if (post.description.length < 20) error = `Opis powinien mieć min. 20 znaków`;
@@ -60,7 +60,7 @@ class SubmitPostForm extends React.Component {
 
     if (!error) {
       action(this.state.post);
-      alert(`Your post has been ${type}`)
+      alert(`Your post has been ${type}`);
       this.setState({
         post: {
           id: initialState.posts.data.length + 1,
@@ -75,10 +75,10 @@ class SubmitPostForm extends React.Component {
           location: '',
           file: null,
         },
-      })
+      });
     }
     else {
-      alert(error)
+      alert(error);
     }
   }
 
@@ -88,44 +88,44 @@ class SubmitPostForm extends React.Component {
     if (files) this.setState({ post: { ...post, file: files[0].name } });
     else this.setState({ post: { ...post, file: null } });
   }
-  componentDidMount() {
-    const { postEdit } = this.props;
-    console.log([postEdit.file])
-    if (postEdit) {
-      this.setState({
-        post: {
-          id: postEdit.id,
-          title: postEdit.title,
-          description: postEdit.description,
-          dateOfPublication: postEdit.dateOfPublication,
-          dateOfUpdate: new Date().toISOString().slice(0, 10),
-          email: postEdit.email,
-          status: postEdit.status,
-          price: postEdit.price,
-          phone: postEdit.phone,
-          location: postEdit.location,
-          file: postEdit.file,
-        }
-      })
-    }
+  // componentDidMount() {
+  //   const { postEdit } = this.props;
+  //   console.log([postEdit.file]);
+  //   if (postEdit) {
+  //     this.setState({
+  //       post: {
+  //         id: postEdit.id,
+  //         title: postEdit.title,
+  //         description: postEdit.description,
+  //         dateOfPublication: postEdit.dateOfPublication,
+  //         dateOfUpdate: new Date().toISOString().slice(0, 10),
+  //         email: postEdit.email,
+  //         status: postEdit.status,
+  //         price: postEdit.price,
+  //         phone: postEdit.phone,
+  //         location: postEdit.location,
+  //         file: postEdit.file,
+  //       },
+  //     });
+  //   }
 
-  }
+  // }
 
 
   render() {
     const { post, value } = this.state;
-    const { postEdit } = this.props;
+    // const { postEdit } = this.props;
     return (
       <form>
         <label htmlFor='title'> Tytuł ogłoszenia:
-                <input id='title' type='text' name='title' value={this.state.post.title} onChange={this.handleChange} required />
+          <input id='title' type='text' name='title' value={this.state.post.title} onChange={this.handleChange} required />
         </label>
         <label htmlFor='description'>Opis produktu:
-                <textarea id='description' cols={40} rows={5} name='description' value={this.state.post.description} onChange={this.handleChange} required />
+          <textarea id='description' cols={40} rows={5} name='description' value={this.state.post.description} onChange={this.handleChange} required />
         </label>
         <br />
         <label>Dodaj zdjęcie
-              <ImageUploader
+          <ImageUploader
             withIcon={true}
             buttonText='Choose image'
             imgExtension={['.jpg', '.gif', '.png', '.gif']}
@@ -159,11 +159,12 @@ class SubmitPostForm extends React.Component {
         <label htmlFor='dateOfPublication'> Data publikacji:
           <input type='date' name='dateOfPublication' value={post.dateOfPublication} onChange={this.handleChange} required />
         </label>
-        <Button variant='contained' onClick={this.handleSubmit}>{postEdit ? 'Edytuj' : 'Dodaj'} </Button>
+        {/* <Button variant='contained' onClick={this.handleSubmit}>{postEdit ? 'Edytuj' : 'Dodaj'} </Button> */}
+        <Button variant='contained' onClick={this.handleSubmit}>Dodaj</Button>
         <Button component={Link} to={`${process.env.PUBLIC_URL}/`} variant="contained">ANULUJ</Button>
       </form>
 
-    )
+    );
 
   }
 }

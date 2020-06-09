@@ -2,7 +2,7 @@ import React from 'react';
 import { initialState } from '../../../redux/initialState';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
-import { getAll, createActionAddPost } from '../../../redux/postsRedux';
+import { getAll, addPost } from '../../../redux/postsRedux';
 import SubmitPostForm from '../../features/SubmitPostForm';
 import styles from './PostAdd.module.scss';
 
@@ -24,7 +24,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addPost: data => dispatch(createActionAddPost(data)),
+  addPost: data => dispatch(addPost(data)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
