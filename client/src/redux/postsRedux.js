@@ -1,4 +1,4 @@
-import axios from 'axios';
+import Axios from 'axios';
 import { API_URL } from '../config';
 
 /* selectors */
@@ -17,6 +17,7 @@ const FETCH_ERROR = createActionName('FETCH_ERROR');
 export const ADD_POST = createActionName('ADD_POST');
 export const EDIT_POST = createActionName('EDIT_POST');
 export const REMOVE_POST = createActionName('REMOVE_POST');
+
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
@@ -34,7 +35,7 @@ export const fetchPublished = () => {
 
     if (posts.data.length === 0 && posts.loading.active === false) {
       dispatch(fetchStarted());
-      axios
+      Axios
         .get('http://localhost:8000/api/posts')
         .then(res => {
           dispatch(fetchSuccess(res.data));
@@ -50,7 +51,8 @@ export const fetchPublished = () => {
 export const loadPostById = (id) => {
   return (dispatch, getState) => {
     dispatch(fetchStarted());
-    axios
+
+    Axios
       .get(`http://localhost:8000/api/posts/${id}`)
       .then(res => {
         dispatch(fetchSuccess(res.data));
@@ -61,23 +63,22 @@ export const loadPostById = (id) => {
   };
 };
 
-export const addPost = (data) => {
-  return dispatch => {
+export const addPostRequest = (data) => {
+  return (dispatch, getState) => {
     dispatch(fetchStarted());
 
-    axios.post(
-      `http://localhost:8000/api/posts`,
-      data,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
+    console.log(data);
+
+    Axios
+      .post(`http://localhost:8000/api/posts`, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+      .then((res) => {
+        console.log('res:', res.data);
+        dispatch(createActionAddPost(res.data));
       })
       .catch(err => {
+        console.log('bład po stronie clienta', err);
         dispatch(fetchError(err.message || true));
       });
-
-    dispatch(createActionAddPost(data));
 
   };
 
@@ -118,6 +119,10 @@ export const reducer = (statePart = [], action = {}) => {
       return {
         ...statePart,
         data: [...statePart.data, action.payload],
+        loading: {
+          active: false,
+          error: false,
+        },
       };
     case REMOVE_POST: {
       let posts = statePart.data.filter(post => post.id !== action.payload.id);

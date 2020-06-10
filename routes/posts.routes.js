@@ -32,19 +32,15 @@ router.get('/posts/:id', async (req, res) => {
 router.post('/posts', async (req, res) => {
   try {
 
-    const { title } = req.fields;
-    console.log('tytul otrzymanego posta', title)
 
-    if (title) { // if fields are not empty...   
-      const newPost = new Post({ title });
-      await newPost.save(); // ...save new photo in DB
-      res.json(newPost);
+    const newPost = new Post({ title: 'lalla' });
+    await newPost.save(); // ...save new photo in DB
+    res.json(newPost);
 
-    } else {
-      throw new Error('Wrong input!');
-    }
+
 
   } catch (err) {
+    console.log('bład po stronie serwera', err)
     res.status(500).json(err);
   }
 })

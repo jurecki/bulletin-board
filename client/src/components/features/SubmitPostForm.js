@@ -51,7 +51,6 @@ class SubmitPostForm extends React.Component {
     const { post } = this.state;
     const { action, type } = this.props;
     let error = null;
-    console.log('Data akutalizacji', post.dateOfUpdate, 'Data publikacji', post.dateOfPublication);
 
     // if (post.title.length < 10) error = `Tytuł powinien mieć min. 10 znaków`;
     // else if (post.description.length < 20) error = `Opis powinien mieć min. 20 znaków`;
@@ -59,7 +58,15 @@ class SubmitPostForm extends React.Component {
     // else if (!post.dateOfPublication) error = 'Musisz podać datę publikacji ogłoszenia'
 
     if (!error) {
-      action(this.state.post);
+
+      const formData = new FormData();
+
+      for (let key of ['title', 'price']) {
+        formData.append(key, post[key]);
+      }
+
+      action(formData);
+
       alert(`Your post has been ${type}`);
       this.setState({
         post: {
@@ -116,7 +123,7 @@ class SubmitPostForm extends React.Component {
     const { post, value } = this.state;
     // const { postEdit } = this.props;
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <label htmlFor='title'> Tytuł ogłoszenia:
           <input id='title' type='text' name='title' value={this.state.post.title} onChange={this.handleChange} required />
         </label>
@@ -160,7 +167,7 @@ class SubmitPostForm extends React.Component {
           <input type='date' name='dateOfPublication' value={post.dateOfPublication} onChange={this.handleChange} required />
         </label>
         {/* <Button variant='contained' onClick={this.handleSubmit}>{postEdit ? 'Edytuj' : 'Dodaj'} </Button> */}
-        <Button variant='contained' onClick={this.handleSubmit}>Dodaj</Button>
+        <Button variant='contained' type='submit'>Dodaj</Button>
         <Button component={Link} to={`${process.env.PUBLIC_URL}/`} variant="contained">ANULUJ</Button>
       </form>
 

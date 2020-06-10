@@ -10,6 +10,7 @@ import styles from './Homepage.module.scss';
 
 const Component = ({ className, children, posts, fetchPublishedPosts }) => (
   <div className={clsx(styles.container, styles.root)}>
+    {fetchPublishedPosts()}
     {initialState.role === 'user' || initialState.role === 'admin' ?
       <div>
         <Button component={NavLink} to={`${process.env.PUBLIC_URL}/post/add`} variant="contained">DODAJ NOWE OGŁOSZENIE</Button>
@@ -38,6 +39,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  fetchPublishedPosts: () => dispatch(fetchPublished()),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
