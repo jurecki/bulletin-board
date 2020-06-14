@@ -59,13 +59,8 @@ class SubmitPostForm extends React.Component {
 
     if (!error) {
 
-      const formData = new FormData();
 
-      for (let key of ['title', 'price']) {
-        formData.append(key, post[key]);
-      }
-
-      action(formData);
+      action(post);
 
       alert(`Your post has been ${type}`);
       this.setState({
@@ -128,7 +123,8 @@ class SubmitPostForm extends React.Component {
           <input id='title' type='text' name='title' value={this.state.post.title} onChange={this.handleChange} required />
         </label>
         <label htmlFor='description'>Opis produktu:
-          <textarea id='description' cols={40} rows={5} name='description' value={this.state.post.description} onChange={this.handleChange} required />
+          <textarea id='description' cols={40} rows={5} name='description' value={this.state.post.description} onChange={this.handleChange}
+           />
         </label>
         <br />
         <label>Dodaj zdjęcie
@@ -147,7 +143,8 @@ class SubmitPostForm extends React.Component {
           <input id='price' type='text' name='price' value={post.price} onChange={this.handleChange} />
         </label>
         <label htmlFor='email'> Adres e-mail:
-          <input id='email' type='email' name='email' value={post.email} onChange={this.handleChange} required />
+          <input id='email' type='email' name='email' value={post.email} onChange={this.handleChange}
+           />
         </label>
         <label htmlFor='phone'> Nr telefonu:
           <input id='phone' type='text' name='phone' value={post.phone} onChange={this.handleChange} />
@@ -164,7 +161,8 @@ class SubmitPostForm extends React.Component {
         </label>
         <br />
         <label htmlFor='dateOfPublication'> Data publikacji:
-          <input type='date' name='dateOfPublication' value={post.dateOfPublication} onChange={this.handleChange} required />
+          <input type='date' name='dateOfPublication' value={post.dateOfPublication} onChange={this.handleChange}
+           />
         </label>
         {/* <Button variant='contained' onClick={this.handleSubmit}>{postEdit ? 'Edytuj' : 'Dodaj'} </Button> */}
         <Button variant='contained' type='submit'>Dodaj</Button>

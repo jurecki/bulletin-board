@@ -31,13 +31,11 @@ router.get('/posts/:id', async (req, res) => {
 
 router.post('/posts', async (req, res) => {
   try {
-
-
-    const newPost = new Post({ title: 'lalla' });
+    console.log('body backend', req.body)
+    const {title, price } = req.body
+    const newPost = new Post(req.body);
     await newPost.save(); // ...save new photo in DB
     res.json(newPost);
-
-
 
   } catch (err) {
     console.log('bład po stronie serwera', err)

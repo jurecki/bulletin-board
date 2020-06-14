@@ -15,7 +15,7 @@ const Component = ({ className, children, posts, fetchPublishedPosts }) => (
       <div>
         <Button component={NavLink} to={`${process.env.PUBLIC_URL}/post/add`} variant="contained">DODAJ NOWE OGŁOSZENIE</Button>
         <h2>Lista ogłoszeń:</h2>
-        {console.log('Post', posts)}
+
         {posts.map(post =>
           <NavLink key={post._id} to={`/post/${post._id}`}>
             <p>{post.title}</p>
@@ -30,7 +30,7 @@ const Component = ({ className, children, posts, fetchPublishedPosts }) => (
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  posts: PropTypes.array,
+  posts: PropTypes.object,
   fetchPublishedPosts: PropTypes.func,
 };
 

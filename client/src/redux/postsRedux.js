@@ -3,7 +3,7 @@ import { API_URL } from '../config';
 
 /* selectors */
 export const getAll = ({ posts }) => posts.data;
-export const getPostById = ({ posts }, id) => posts.data.find(post => parseInt(post._id) === parseInt(id));
+export const getPostById = ({ posts }) => posts.currentPost || {};
 
 /* action name creator */
 const reducerName = 'posts';
@@ -31,7 +31,6 @@ export const createActionRemovePost = payload => ({ payload, type: REMOVE_POST }
 export const fetchPublished = () => {
   return (dispatch, getState) => {
     const { posts } = getState();
-    console.log(posts);
 
     if (posts.data.length === 0 && posts.loading.active === false) {
       dispatch(fetchStarted());
@@ -50,6 +49,8 @@ export const fetchPublished = () => {
 
 export const loadPostById = (id) => {
   return (dispatch, getState) => {
+    const { posts } = getState();
+
     dispatch(fetchStarted());
 
     Axios
@@ -70,7 +71,7 @@ export const addPostRequest = (data) => {
     console.log(data);
 
     Axios
-      .post(`http://localhost:8000/api/posts`, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+      .post(`http://localhost:8000/api/posts`, data)
       .then((res) => {
         console.log('res:', res.data);
         dispatch(createActionAddPost(res.data));
@@ -97,14 +98,25 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_SUCCESS: {
-      return {
-        ...statePart,
-        loading: {
-          active: false,
-          error: false,
-        },
-        data: action.payload,
-      };
+      if(Array.isArray(action.payload)) {
+        return {
+          ...statePart,
+          loading: {
+            active: false,
+            error: false,
+          },
+          data: action.payload,
+        };
+      } else {
+        return {
+          ...statePart,
+          loading: {
+            active: false,
+            error: false,
+          },
+          currentPost: action.payload,
+      }}
+
     }
     case FETCH_ERROR: {
       return {

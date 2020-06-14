@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { getAll, createActionRemovePost, loadPostById } from '../../../redux/postsRedux';
+import { getPostById, createActionRemovePost, loadPostById } from '../../../redux/postsRedux';
 import { Link } from 'react-router-dom';
 import { IMAGES_URL } from '../../../config';
 
@@ -14,7 +14,7 @@ class Component extends React.Component {
     children: PropTypes.node,
     className: PropTypes.string,
     match: PropTypes.object,
-    post: PropTypes.node,
+    post: PropTypes.object,
     removePost: PropTypes.func,
     getPost: PropTypes.func,
   };
@@ -24,13 +24,18 @@ class Component extends React.Component {
     this.props.removePost(post);
   }
 
+  componentDidMount() {
+    this.props.getPost(this.props.match.params.id)
+  }
+
+
   render() {
     const { className, match, post, getPost } = this.props;
     const id = match.params.id;
-    getPost(id);
-    return (
 
+    return (
       <div className={clsx(className, styles.root)}>
+        {console.log('POST', post.title)}
         <h1>{post.title}</h1>
         <p>Opis: {post.text}</p>
         <p>Data publikacji: {post.created}</p>
@@ -48,7 +53,7 @@ class Component extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  post: getAll(state),
+  post: getPostById(state),
 }
 
 );
