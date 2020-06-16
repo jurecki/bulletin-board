@@ -65,7 +65,7 @@ const Component = ({ className, children, posts, fetchPublishedPosts }) => (
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  posts: PropTypes.array,
+  posts: PropTypes.object,
   fetchPublishedPosts: PropTypes.func,
 };
 

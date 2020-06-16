@@ -49,6 +49,8 @@ export const fetchPublished = () => {
 
 export const loadPostById = (id) => {
   return (dispatch, getState) => {
+    const { posts } = getState();
+
     dispatch(fetchStarted());
 
     Axios

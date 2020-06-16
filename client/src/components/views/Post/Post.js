@@ -33,7 +33,6 @@ class Component extends React.Component {
     this.props.getPost(this.props.match.params.id);
   }
 
-
   render() {
     const { className, match, post } = this.props;
     const id = match.params.id;
