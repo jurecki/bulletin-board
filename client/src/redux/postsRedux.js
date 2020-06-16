@@ -3,7 +3,7 @@ import { API_URL } from '../config';
 
 /* selectors */
 export const getAll = ({ posts }) => posts.data;
-export const getPostById = ({ posts }, id) => posts.data.find(post => parseInt(post._id) === parseInt(id));
+export const getPostById = ({ posts }) => posts.currentPost || {};
 
 /* action name creator */
 const reducerName = 'posts';
@@ -31,12 +31,11 @@ export const createActionRemovePost = payload => ({ payload, type: REMOVE_POST }
 export const fetchPublished = () => {
   return (dispatch, getState) => {
     const { posts } = getState();
-    console.log(posts);
 
     if (posts.data.length === 0 && posts.loading.active === false) {
       dispatch(fetchStarted());
       Axios
-        .get('http://localhost:8000/api/posts')
+        .get(`${API_URL}/posts`)
         .then(res => {
           dispatch(fetchSuccess(res.data));
         })
@@ -53,7 +52,7 @@ export const loadPostById = (id) => {
     dispatch(fetchStarted());
 
     Axios
-      .get(`http://localhost:8000/api/posts/${id}`)
+      .get(`${API_URL}/posts/${id}`)
       .then(res => {
         dispatch(fetchSuccess(res.data));
       })
@@ -70,7 +69,12 @@ export const addPostRequest = (data) => {
     console.log(data);
 
     Axios
-      .post(`http://localhost:8000/api/posts`, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+      .post(`${API_URL}/posts`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+      )
       .then((res) => {
         console.log('res:', res.data);
         dispatch(createActionAddPost(res.data));
@@ -82,6 +86,39 @@ export const addPostRequest = (data) => {
 
   };
 
+};
+
+export const updatePostRequest = (id, data) => {
+  return (dispatch, getState) => {
+    dispatch(fetchStarted());
+    console.log('IIDPOST', id, data);
+    Axios.put(`${API_URL}/posts/${id}`, data)
+      .then((res) => {
+        console.log('resDATA', res.data);
+        dispatch(createActionEditPost(res.data));
+      })
+      .catch((err) => {
+        console.log('blad po stronie clienta');
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+
+
+export const removePostById = (data) => {
+  return (dispatch, getState) => {
+    dispatch(fetchStarted());
+    Axios
+      .delete(`${API_URL}/posts/${data}`)
+      .then(res => {
+        dispatch(createActionRemovePost(data));
+      })
+      .catch(err => {
+        console.log('blad po stronie clienta', err);
+        dispatch(fetchError(err.message || true));
+      });
+  };
 };
 
 /* reducer */
@@ -97,14 +134,26 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_SUCCESS: {
-      return {
-        ...statePart,
-        loading: {
-          active: false,
-          error: false,
-        },
-        data: action.payload,
-      };
+      if (Array.isArray(action.payload)) {
+        return {
+          ...statePart,
+          loading: {
+            active: false,
+            error: false,
+          },
+          data: action.payload,
+        };
+      } else {
+        return {
+          ...statePart,
+          loading: {
+            active: false,
+            error: false,
+          },
+          currentPost: action.payload,
+        };
+      }
+
     }
     case FETCH_ERROR: {
       return {
@@ -125,20 +174,25 @@ export const reducer = (statePart = [], action = {}) => {
         },
       };
     case REMOVE_POST: {
-      let posts = statePart.data.filter(post => post.id !== action.payload.id);
+      let posts = statePart.data.filter(post => post._id !== action.payload);
       return {
         ...statePart,
         data: posts,
       };
     }
     case EDIT_POST: {
+      console.log('payload', action.payload);
       let posts = statePart.data.map(post => {
-        if (post.id === action.payload.id) post = action.payload;
+        if (post._id === action.payload._id) post = action.payload;
         return post;
       });
       return {
         ...statePart,
         data: posts,
+        loading: {
+          active: false,
+          error: false,
+        },
       };
     }
 

@@ -2,13 +2,24 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
-
+const formidable = require('express-formidable');
+const uniqid = require('uniqid');
 const postsRoutes = require('./routes/posts.routes');
 
 const app = express();
 
 /* MIDDLEWARE */
 app.use(cors());
+
+app.use(formidable({ uploadDir: './public/uploads/' }, [{
+  event: 'fileBegin', // on every file upload...
+  action: (req, res, next, name, file) => {
+    const fileName = uniqid() + '.' + file.name.split('.')[1];
+    file.path = __dirname + '/client/public/uploads/photo_' + fileName; // ...move the file to public/uploads with unique name
+  }
+},
+]));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

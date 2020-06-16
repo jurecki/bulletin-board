@@ -1,20 +1,31 @@
 @import '../../styles/settings.scss';
 
-.container {
-  padding: 20px;
-  margin: 20px
-}
+.root {
+  display: 'flex';
+  flex: 'wrap';
+};
 
-label {
-  display: flex;
-  margin: 15px;
-}
-
-input, textarea, select {
-margin-left: 15px;
-padding: 2px;
-}
+.textField {
+  margin-left: 25px;
+  margin-right: 250px;
+  height: 25px;
+  padding: 15px;
+};
 
 .photo {
-  width: 500px
+  width: 70%;
+  margin: auto auto;
+  padding-top: 20px;
+}
+.selectField {
+  margin-left: 30px;
+  margin-right: 250px;
+  height: 25px;
+  width: 200px;
+  padding: 15px;
+};
+
+.buttonGroup {
+  padding: 25px;
+  margin-top: 40px;
 }
