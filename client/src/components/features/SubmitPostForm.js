@@ -167,6 +167,7 @@ class SubmitPostForm extends React.Component {
           <TextField
             className={styles.textField}
             id="standard-full-width"
+            fullWidth
             label='Adres e-mail'
             margin="normal"
             value={post.author}
@@ -177,6 +178,7 @@ class SubmitPostForm extends React.Component {
             className={styles.textField}
             id="standard-full-width"
             label='Nr telefonu:'
+            fullWidth
             margin="normal"
             value={post.phone}
             onChange={this.handleChange}
@@ -186,6 +188,7 @@ class SubmitPostForm extends React.Component {
             className={styles.textField}
             id="standard-full-width"
             label='Lokalizacja:'
+            fullWidth
             margin="normal"
             value={this.state.post.location}
             onChange={this.handleChange}
@@ -196,6 +199,7 @@ class SubmitPostForm extends React.Component {
             id="standard-full-width"
             type="text"
             label='Cena:'
+            fullWidth
             margin="normal"
             value={post.price}
             onChange={this.handleChange}
