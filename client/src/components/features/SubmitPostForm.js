@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 class SubmitPostForm extends React.Component {
   state = {
@@ -39,7 +40,7 @@ class SubmitPostForm extends React.Component {
   handleChange = (e) => {
     const value = e.target.value;
     const name = e.target.name;
-
+    console.log('status', e.target.value)
     this.setState({
       post: {
         ...this.state.post,
@@ -97,7 +98,7 @@ class SubmitPostForm extends React.Component {
 
   setPhoto = (files) => {
     const { post } = this.state;
-    console.log('image upload', files[0]);
+    console.log('image upload', files[0].name);
     this.setState({ post: { ...post, photo: files[0] } });
   }
 
@@ -129,13 +130,14 @@ class SubmitPostForm extends React.Component {
   render() {
     const { post, value } = this.state;
     const { postEdit } = this.props;
+
     return (
       <form onSubmit={this.handleSubmit} className={styles.root}>
         <TextField
           className={styles.textField}
           id="standard-full-width"
-          placeholder="Tytuł ogłoszenia:"
           fullWidth
+          label="Tytuł ogłoszenia:"
           margin="normal"
           value={post.title}
           onChange={this.handleChange}
@@ -144,7 +146,7 @@ class SubmitPostForm extends React.Component {
         <TextField
           className={styles.textField}
           id="standard-full-width"
-          placeholder="Opis produktu:"
+          label='Opis produktu:'
           fullWidth
           margin="normal"
           value={post.text}
@@ -165,7 +167,7 @@ class SubmitPostForm extends React.Component {
           <TextField
             className={styles.textField}
             id="standard-full-width"
-            placeholder="Adres e-mail"
+            label='Adres e-mail'
             margin="normal"
             value={post.author}
             onChange={this.handleChange}
@@ -174,7 +176,7 @@ class SubmitPostForm extends React.Component {
           <TextField
             className={styles.textField}
             id="standard-full-width"
-            placeholder="Nr telefonu:"
+            label='Nr telefonu:'
             margin="normal"
             value={post.phone}
             onChange={this.handleChange}
@@ -183,7 +185,7 @@ class SubmitPostForm extends React.Component {
           <TextField
             className={styles.textField}
             id="standard-full-width"
-            placeholder="Lokalizacja:"
+            label='Lokalizacja:'
             margin="normal"
             value={this.state.post.location}
             onChange={this.handleChange}
@@ -193,11 +195,14 @@ class SubmitPostForm extends React.Component {
             className={styles.textField}
             id="standard-full-width"
             type="text"
-            placeholder="Cena:"
+            label='Cena:'
             margin="normal"
             value={post.price}
             onChange={this.handleChange}
             name='price'
+            InputProps={{
+              endAdornment: <InputAdornment position="end">PLN</InputAdornment>,
+            }}
           />
         </div>
         <br />
@@ -207,7 +212,7 @@ class SubmitPostForm extends React.Component {
             className={styles.selectField}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={value}
+            value={post.status}
             name='status'
             onChange={this.handleChange}
           >
@@ -223,13 +228,13 @@ class SubmitPostForm extends React.Component {
             label="Data publikacji:"
             type="date"
             defaultValue="2017-05-24"
-            name='dateOfPublication'
-            value={post.dateOfPublication}
+            name='created'
+            value={post.created}
             onChange={this.handleChange}
           />
         </div>
         <div className={styles.buttonGroup}>
-          <Button variant='contained' onClick={this.handleSubmit}>{postEdit ? 'Edytuj' : 'Dodaj'} </Button>
+          <Button variant='contained' onClick={this.handleSubmit}>{postEdit ? 'Zapisz zmiany' : 'Dodaj'} </Button>
           <Button component={Link} to={`${process.env.PUBLIC_URL}/`} variant="contained">ANULUJ</Button>
         </div>
       </form>

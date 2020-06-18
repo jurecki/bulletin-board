@@ -46,10 +46,10 @@ router.delete('/posts/:id', async (req, res) => {
 router.put('/posts/:id', async (req, res) => {
   try {
 
-    // const photo = req.files.photo;
-    // let fileName;
-    // if (!photo) fileName = null;
-    // else fileName = photo.path.split('/').slice(-1)[0]; // cut only filename from full path, e.g. C:/test/abc.jpg -> abc.jpg
+    const photo = req.files.photo;
+    let fileName;
+    if (!photo) fileName = null;
+    else fileName = photo.path.split('/').slice(-1)[0]; // cut only filename from full path, e.g. C:/test/abc.jpg -> abc.jpg
 
     const { author, created, updated, status, title, text, price, phone, location } = req.fields
 
@@ -62,6 +62,7 @@ router.put('/posts/:id', async (req, res) => {
         post.status = status,
         post.text = text,
         post.price = price,
+        post.photo = fileName,
         post.phone = phone,
         post.location = location,
 
