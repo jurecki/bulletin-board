@@ -55,10 +55,10 @@ class SubmitPostForm extends React.Component {
     const { action, type } = this.props;
     let error = null;
 
-    // if (post.title.length < 10) error = `Tytuł powinien mieć min. 10 znaków`;
-    // else if (post.description.length < 20) error = `Opis powinien mieć min. 20 znaków`;
-    // else if (!post.email) error = "Musisz dodać poprawny adres email"
-    // else if (!post.dateOfPublication) error = 'Musisz podać datę publikacji ogłoszenia'
+    if (post.title.length < 10) error = `Tytuł powinien mieć min. 10 znaków`;
+    else if (post.text.length < 20) error = `Opis powinien mieć min. 20 znaków`;
+    else if (!post.author) error = "Musisz dodać poprawny adres email"
+    else if (!post.created) error = 'Musisz podać datę publikacji ogłoszenia'
 
     if (!error) {
 
@@ -77,7 +77,7 @@ class SubmitPostForm extends React.Component {
         console.log('edycja dane', formData)
       } else action(formData);
 
-     console.log('edycja', this.props)
+      console.log('edycja', this.props)
       this.setState({
         post: {
           title: '',
@@ -108,7 +108,7 @@ class SubmitPostForm extends React.Component {
   componentDidMount() {
 
     const { postEdit } = this.props;
-    console.log('postedit', postEdit.created);
+    console.log('postedit', postEdit);
 
     if (postEdit) {
       this.setState({
@@ -116,8 +116,8 @@ class SubmitPostForm extends React.Component {
           id: postEdit.id,
           title: postEdit.title,
           text: postEdit.text,
-          created: (postEdit.created===undefined)? postEdit.created: postEdit.created.slice(0,10),
-          updated: new Date().toISOString().slice(0,10),
+          created: (postEdit.created === undefined) ? postEdit.created : postEdit.created.slice(0, 10),
+          updated: new Date().toISOString().slice(0, 10),
           author: postEdit.author,
           status: postEdit.status,
           price: postEdit.price,
@@ -132,7 +132,7 @@ class SubmitPostForm extends React.Component {
 
 
   render() {
-    const { post, value } = this.state;
+    const { post } = this.state;
     const { postEdit } = this.props;
 
     return (

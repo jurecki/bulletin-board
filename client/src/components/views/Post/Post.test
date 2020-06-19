@@ -2,9 +2,27 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { PostComponent } from './Post';
 
+const mockProps = {
+  posts: [
+    {
+      _id: 1,
+      author: 'kontakt@kontakt.pl',
+      title: 'Room for rent',
+      text: 'I have a spare room for rent. Low price!',
+      updated: '2020-06-19',
+      created: '2020-06-19',
+      location: 'Wrocław',
+      phone: '322-123-453',
+      price: '20',
+    }
+  ],
+  fetchPublishedPosts: () => console.log('function fetchPublishedPosts'),
+  id: 1,
+}
+
 describe('Component Post', () => {
   it('should render without crashing', () => {
-    const component = shallow(<PostComponent />);
+    const component = shallow(<PostComponent  {...mockProps}/>);
     expect(component).toBeTruthy();
   });
 });

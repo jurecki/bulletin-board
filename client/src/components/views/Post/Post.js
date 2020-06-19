@@ -53,10 +53,10 @@ class Component extends React.Component {
                     <strong>Opis:</strong> {post.text}
                   </Typography>
                   <Typography variant="body1" gutterBottom>
-                    <strong>Data publikacji:</strong> {(post.created===undefined)? post.created: post.created.slice(0,10)}
+                    <strong>Data publikacji:</strong> {(post.created === undefined) ? post.created : post.created.slice(0, 10)}
                   </Typography>
                   <Typography variant="body1" gutterBottom>
-                    <strong>Data aktualizacji:</strong> {(post.updated===undefined)? post.updated: post.updated.slice(0,10)}
+                    <strong>Data aktualizacji:</strong> {(post.updated === undefined) ? post.updated : post.updated.slice(0, 10)}
                   </Typography>
                   <Typography variant="body1" gutterBottom>
                     <strong>Email:</strong> {post.author}
@@ -73,8 +73,8 @@ class Component extends React.Component {
                 </Grid>
                 <Grid item>
                   <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                    <Button component={Link} to={`${process.env.PUBLIC_URL}/post/${id}/edit`} variant="contained">Edytuj</Button>
-                    <Button component={Link} to={`${process.env.PUBLIC_URL}/`} variant='contained' onClick={this.handlerOnClick.bind(this, post._id)}>USUŃ</Button>
+                    <Button className={styles.btn} component={Link} to={`${process.env.PUBLIC_URL}/post/${id}/edit`} variant="contained">Edytuj</Button>
+                    <Button className={styles.btn} component={Link} to={`${process.env.PUBLIC_URL}/`} variant='contained' onClick={this.handlerOnClick.bind(this, post._id)}>USUŃ</Button>
                   </Typography>
                 </Grid>
               </Grid>
