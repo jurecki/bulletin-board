@@ -6,15 +6,21 @@ import { connect } from 'react-redux';
 import { getAll, addPostRequest } from '../../../redux/postsRedux';
 import SubmitPostForm from '../../features/SubmitPostForm';
 import styles from './PostAdd.module.scss';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 const Component = ({ addPost }) => {
   return (
     <div className={clsx(styles.container, styles.root)}>
       {(initialState.role === 'user' || initialState.role === 'admin') &&
-        <div>
-          <h2>Wypełnij formularz aby dodać nowe ogłoszenie</h2>
+      <Grid container spacing={3}>
+      <Grid item xs={12} md={6}>
+        <Paper>
+        <h2>Wypełnij formularz aby dodać nowe ogłoszenie</h2>
           <SubmitPostForm action={addPost} type='added' />
-        </div>
+        </Paper>
+      </Grid>
+    </Grid>
       }
     </div>
   );

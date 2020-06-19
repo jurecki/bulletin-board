@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { getPostById, updatePostRequest } from '../../../redux/postsRedux';
 import SubmitPostForm from '../../features/SubmitPostForm.js';

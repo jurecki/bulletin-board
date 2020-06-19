@@ -38,7 +38,7 @@ const Component = ({ className, children, posts, fetchPublishedPosts }) => (
                             Autor ogłoszenia: {post.author}
                           </Typography>
                           <Typography variant="body2" gutterBottom>
-                            Data publikacji: {post.created}
+                            Data publikacji: {post.created.slice(0, 10)}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -65,7 +65,7 @@ const Component = ({ className, children, posts, fetchPublishedPosts }) => (
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  posts: PropTypes.object,
+  posts: PropTypes.array,
   fetchPublishedPosts: PropTypes.func,
 };
 

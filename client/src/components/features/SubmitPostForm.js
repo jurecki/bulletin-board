@@ -3,7 +3,7 @@ import ImageUploader from 'react-images-upload';
 import styles from './submitPostForm.module.scss';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -40,7 +40,7 @@ class SubmitPostForm extends React.Component {
   handleChange = (e) => {
     const value = e.target.value;
     const name = e.target.name;
-    console.log('status', e.target.value)
+    console.log(e.target.name, e.target.value)
     this.setState({
       post: {
         ...this.state.post,
@@ -66,6 +66,7 @@ class SubmitPostForm extends React.Component {
 
       for (let key of ['title', 'text', 'created', 'updated', 'author', 'status', 'price', 'phone', 'location']) {
         formData.append(key, post[key]);
+        console.log('postKey', post[key])
       }
 
       formData.append('photo', post.photo);
@@ -73,9 +74,10 @@ class SubmitPostForm extends React.Component {
 
       if (type === 'edited') {
         action(this.props.postEdit._id, formData);
+        console.log('edycja dane', formData)
       } else action(formData);
 
-      alert(`Your post has been ${type}`);
+     console.log('edycja', this.props)
       this.setState({
         post: {
           title: '',
@@ -90,6 +92,7 @@ class SubmitPostForm extends React.Component {
           photo: null,
         },
       });
+      this.props.history.push('/');
     }
     else {
       alert(error);
@@ -105,15 +108,16 @@ class SubmitPostForm extends React.Component {
   componentDidMount() {
 
     const { postEdit } = this.props;
-    console.log('postedit', postEdit);
+    console.log('postedit', postEdit.created);
+
     if (postEdit) {
       this.setState({
         post: {
           id: postEdit.id,
           title: postEdit.title,
           text: postEdit.text,
-          created: postEdit.created,
-          updated: new Date().toISOString().slice(0, 10),
+          created: (postEdit.created===undefined)? postEdit.created: postEdit.created.slice(0,10),
+          updated: new Date().toISOString().slice(0,10),
           author: postEdit.author,
           status: postEdit.status,
           price: postEdit.price,
@@ -230,16 +234,16 @@ class SubmitPostForm extends React.Component {
             className={styles.textField}
             id="date"
             label="Data publikacji:"
+            format="MM/dd/yyyy"
             type="date"
-            defaultValue="2017-05-24"
             name='created'
             value={post.created}
             onChange={this.handleChange}
           />
         </div>
         <div className={styles.buttonGroup}>
-          <Button variant='contained' onClick={this.handleSubmit}>{postEdit ? 'Zapisz zmiany' : 'Dodaj'} </Button>
-          <Button component={Link} to={`${process.env.PUBLIC_URL}/`} variant="contained">ANULUJ</Button>
+          <Button component={Link} to={`${process.env.PUBLIC_URL}/`} className={styles.btn} variant='contained' onClick={this.handleSubmit}>{postEdit ? 'Zapisz zmiany' : 'Dodaj'} </Button>
+          <Button className={styles.btn} component={Link} to={`${process.env.PUBLIC_URL}/`} variant="contained">ANULUJ</Button>
         </div>
       </form>
 
@@ -248,4 +252,4 @@ class SubmitPostForm extends React.Component {
   }
 }
 
-export default SubmitPostForm;
+export default withRouter(SubmitPostForm);

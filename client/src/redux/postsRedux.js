@@ -93,7 +93,6 @@ export const addPostRequest = (data) => {
 export const updatePostRequest = (id, data) => {
   return (dispatch, getState) => {
     dispatch(fetchStarted());
-    console.log('IIDPOST', id, data);
     Axios.put(`${API_URL}/posts/${id}`, data)
       .then((res) => {
         console.log('resDATA', res.data);

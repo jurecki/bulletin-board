@@ -45,7 +45,7 @@ router.delete('/posts/:id', async (req, res) => {
 
 router.put('/posts/:id', async (req, res) => {
   try {
-
+    //console.log('backend', req.fileds.created)
     const photo = req.files.photo;
     let fileName;
     if (!photo) fileName = null;

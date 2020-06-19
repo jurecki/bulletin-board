@@ -53,10 +53,10 @@ class Component extends React.Component {
                     <strong>Opis:</strong> {post.text}
                   </Typography>
                   <Typography variant="body1" gutterBottom>
-                    <strong>Data publikacji:</strong> {post.created}
+                    <strong>Data publikacji:</strong> {(post.created===undefined)? post.created: post.created.slice(0,10)}
                   </Typography>
                   <Typography variant="body1" gutterBottom>
-                    <strong>Data aktualizacji:</strong> {post.updated}
+                    <strong>Data aktualizacji:</strong> {(post.updated===undefined)? post.updated: post.updated.slice(0,10)}
                   </Typography>
                   <Typography variant="body1" gutterBottom>
                     <strong>Email:</strong> {post.author}
