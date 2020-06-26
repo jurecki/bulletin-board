@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { PostComponent } from './Post';
 
 const mockProps = {
-  posts: [
+  post:
     {
       _id: 1,
       author: 'kontakt@kontakt.pl',
@@ -14,10 +14,11 @@ const mockProps = {
       location: 'Wrocław',
       phone: '322-123-453',
       price: '20',
-    }
-  ],
+    },
   fetchPublishedPosts: () => console.log('function fetchPublishedPosts'),
+  getPost: () => console.log('getPost'),
   id: 1,
+  match: {params: 1,}
 }
 
 describe('Component Post', () => {
