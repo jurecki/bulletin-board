@@ -4,21 +4,21 @@ import { PostComponent } from './Post';
 
 const mockProps = {
   post:
-  {
-    _id: 1,
-    author: 'kontakt@kontakt.pl',
-    title: 'Room for rent',
-    text: 'I have a spare room for rent. Low price!',
-    updated: '2020-06-19',
-    created: '2020-06-19',
-    location: 'Wrocław',
-    phone: '322-123-453',
-    price: '20',
-  },
+    {
+      _id: 1,
+      author: 'kontakt@kontakt.pl',
+      title: 'Room for rent',
+      text: 'I have a spare room for rent. Low price!',
+      updated: '2020-06-19',
+      created: '2020-06-19',
+      location: 'Wrocław',
+      phone: '322-123-453',
+      price: '20',
+    },
   fetchPublishedPosts: () => console.log('function fetchPublishedPosts'),
   getPost: () => console.log('getPost'),
   id: 1,
-  match: { params: 1, }
+  match: {params: 1,}
 }
 
 describe('Component Post', () => {
